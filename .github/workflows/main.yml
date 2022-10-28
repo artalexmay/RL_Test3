@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: ['3.0', '3.1.x', '5.0.x' ]
+        dotnet-version: ['5.0.x' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test TestProject1 --no-build --verbosity n --logger trx;LogFileName=./RL_Test3/TestResults/mytests.trx 
+        run: dotnet test TestProject1 --no-build --verbosity n --logger trx
         continue-on-error: true
 
 
