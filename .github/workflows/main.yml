@@ -30,6 +30,6 @@ jobs:
           name: JEST Tests            # Name of the check run which will be created
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # test-results: ./TestProject1/TestResults
-          path: ./TestProject1/TestResults    # Path to test results
+          path: ./TestProject1/TestResults/*.trx    # Path to test results
           reporter: dotnet-trx        # Format of test results
           comment-title: 'Unit Test Results'
