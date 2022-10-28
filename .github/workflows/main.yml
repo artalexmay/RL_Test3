@@ -21,14 +21,14 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test RL_Test3/TestProject1 --no-build --verbosity n --logger trx;LogFileName=./RL_Test3/TestProject1/TestResults/mytests.trx 
+        run: dotnet test RL_Test3/TestProject1 --no-build --verbosity n --logger trx;LogFileName=./RL_Test3/TestResults/mytests.trx 
         continue-on-error: true
         
       - name: Publish test results
         uses: bibipkins/dotnet-test-reporter@c13c759e2c509efa3d83109f62dbb3e92697a140
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-results: TestProject1/TestResults/
+          test-results: ./RL_Test3/TestResults/mytests.trx
           comment-title: 'Unit Test Results'
 
 
