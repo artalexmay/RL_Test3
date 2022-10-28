@@ -27,6 +27,7 @@ jobs:
       - name: Test Reporter
         uses: dorny/test-reporter@v1.6.0
         with:
+          name: JEST Tests            # Name of the check run which will be created
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-results: ./TestProject1/TestResults
           comment-title: 'Unit Test Results'
