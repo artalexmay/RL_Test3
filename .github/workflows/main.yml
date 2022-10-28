@@ -24,8 +24,8 @@ jobs:
         run: dotnet test TestProject1 -c Release --no-build --verbosity n --logger trx
         continue-on-error: true
 
-      - name: Publish test results
-        uses: bibipkins/dotnet-test-reporter@v1
+      - name: Test Reporter
+        uses: dorny/test-reporter@v1.6.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-results: ./TestProject1/TestResults
