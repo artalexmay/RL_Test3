@@ -33,3 +33,4 @@ jobs:
           path: ./TestProject1/TestResults/*.trx    # Path to test results
           reporter: dotnet-trx        # Format of test results
           comment-title: 'Unit Test Results'
+          only-summary: 'true'
