@@ -29,5 +29,7 @@ jobs:
         with:
           name: JEST Tests            # Name of the check run which will be created
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-results: ./TestProject1/TestResults
+          # test-results: ./TestProject1/TestResults
+          path: ./TestProject1/TestResults*.xml    # Path to test results
+          reporter: jest-junit        # Format of test results
           comment-title: 'Unit Test Results'
