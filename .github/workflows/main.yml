@@ -21,11 +21,11 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test TestProject1 -c Release --no-build --verbosity n --logger trx
+        run: dotnet test TestProject1 -c Release --no-build --verbosity n --logger xml
         continue-on-error: true
 
-      - name: Jest Github Action Reporter
-        uses: IgnusG/jest-report-action@v2.3.3
+      - name: Test Reporter
+        uses: dorny/test-reporter@v1.6.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-results: ./TestProject1/TestResults
