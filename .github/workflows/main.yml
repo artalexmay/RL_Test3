@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test RL_Test3/TestProject1 --no-build --verbosity n --logger trx
+        run: dotnet test TestProject1 --no-build --verbosity n --logger trx
         continue-on-error: true
 
 
