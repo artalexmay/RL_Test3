@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-          
+
       - name: Get Shared Pull Requests
         uses: octokit/request-action@v2.x
         id: get_shared_prs
@@ -26,8 +26,8 @@ jobs:
           repo: RL_Test_Shared
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-        - name: Checkout Shared
+
+      - name: Checkout Shared
         uses: actions/checkout@v3
         with:
           repository: 'artalexmay/RL_Test_Shared'
