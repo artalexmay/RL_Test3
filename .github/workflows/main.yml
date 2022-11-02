@@ -37,10 +37,10 @@ jobs:
         run: dotnet restore
         
       - name: Build
-        run: dotnet build TestProject1 --configuration Release --no-restore
+        run: dotnet build RL_Test3/TestProject1 --configuration Release --no-restore
         
       - name: Test
-        run: dotnet test TestProject1 -c Release --no-build --verbosity n --logger trx
+        run: dotnet test RL_Test3/TestProject1 -c Release --no-build --verbosity n --logger trx
         continue-on-error: true
 
       - name: Publish test results
