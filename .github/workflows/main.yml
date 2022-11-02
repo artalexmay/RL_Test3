@@ -36,7 +36,7 @@ jobs:
       - name: RL ath
         run: |
             echo "::group::My title"
-            echo "{path}" >> $GITHUB_PATH
+            echo "$PATH"
           
       - name: Install dependencies
         run: dotnet restore
