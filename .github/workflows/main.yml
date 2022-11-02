@@ -33,6 +33,11 @@ jobs:
           repository: 'artalexmay/RL_Test_Shared'
           token: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: RL ath
+        run: |
+            echo "::group::My title"
+            echo "ls -la"
+          
       - name: Install dependencies
         run: dotnet restore
         
