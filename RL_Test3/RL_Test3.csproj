@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\RL_Test_Shared\RL_Test_Shared\RL_Test_Shared.csproj" />
+  </ItemGroup>
+
 </Project>

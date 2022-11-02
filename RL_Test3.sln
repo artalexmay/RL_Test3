@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RL_Test3", "RL_Test3\RL_Test3.csproj", "{BC06C513-8029-468A-BE67-1F3651482C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RL_Test3", "RL_Test3\RL_Test3.csproj", "{BC06C513-8029-468A-BE67-1F3651482C84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{4238C408-7528-4257-AA3D-AF8E633D2806}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "TestProject1\TestProject1.csproj", "{4238C408-7528-4257-AA3D-AF8E633D2806}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RL_Test_Shared", "..\RL_Test_Shared\RL_Test_Shared\RL_Test_Shared.csproj", "{A72455AB-52D9-4CD1-9EB9-19DEDE6AB7EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4238C408-7528-4257-AA3D-AF8E633D2806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4238C408-7528-4257-AA3D-AF8E633D2806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4238C408-7528-4257-AA3D-AF8E633D2806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A72455AB-52D9-4CD1-9EB9-19DEDE6AB7EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A72455AB-52D9-4CD1-9EB9-19DEDE6AB7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A72455AB-52D9-4CD1-9EB9-19DEDE6AB7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A72455AB-52D9-4CD1-9EB9-19DEDE6AB7EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
