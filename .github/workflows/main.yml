@@ -27,6 +27,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+        - name: Checkout Shared
+        uses: actions/checkout@v3
+        with:
+          repository: 'artalexmay/RL_Test_Shared'
+    #      ref: ${{ env.SHARED_REF }}
+          path: 'Shared'
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Install dependencies
         run: dotnet restore
