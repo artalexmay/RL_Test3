@@ -48,5 +48,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           #test-results: ./TestProject1/TestResults
-          test-results: ./RL_Test3/TestProject1/TestResults
+          test-results: ../TestProject1/TestResults
           comment-title: 'Unit Test Results'
