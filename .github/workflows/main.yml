@@ -16,6 +16,18 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+          
+      - name: Get Shared Pull Requests
+        uses: octokit/request-action@v2.x
+        id: get_shared_prs
+        with:
+          route: GET /repos/{owner}/{repo}/pulls
+          owner: artalexmay
+          repo: RL_Test_Shared
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+          
       - name: Install dependencies
         run: dotnet restore
       - name: Build
