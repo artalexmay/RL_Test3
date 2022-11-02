@@ -32,7 +32,7 @@ jobs:
         with:
           repository: 'artalexmay/RL_Test_Shared'
     #      ref: ${{ env.SHARED_REF }}
-          path: '../RL_Test_Shared'
+          path: 'RL_Test3'
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Install dependencies
