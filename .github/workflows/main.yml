@@ -32,13 +32,15 @@ jobs:
         with:
           repository: 'artalexmay/RL_Test_Shared'
     #      ref: ${{ env.SHARED_REF }}
-          path: 'Shared'
+          path: 'RL_Test_Shared'
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Install dependencies
         run: dotnet restore
+        
       - name: Build
         run: dotnet build --configuration Release --no-restore
+        
       - name: Test
         run: dotnet test TestProject1 -c Release --no-build --verbosity n --logger trx
         continue-on-error: true
