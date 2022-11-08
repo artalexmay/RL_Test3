@@ -24,6 +24,24 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
     
     
+      - name: Checkout Hub
+        uses: actions/checkout@v3
+        with:
+          repository: 'artalexmay/RL_Test3'
+          ref: ${{ github.ref }}
+          path: 'RL_Test3'
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Checkout RL Shared
+        uses: actions/checkout@v3
+        with:
+          repository: 'artalexmay/RL_Test_Shared'
+          ref: ${{ env.SHARED_REF }}
+          path: 'RL_Test_Shared'
+          token: ${{ secrets.GH_PAT }}
+    
+    
+    
       - uses: actions/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
