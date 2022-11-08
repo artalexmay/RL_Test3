@@ -1,2 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World! 33");
+
+using RL_Test_Shared;
+
+Console.WriteLine($"Hello, World! {Class1.Method1()}");
