@@ -92,7 +92,7 @@ jobs:
  #       run: dotnet restore
  
       - name: Restore dependencies
-        run: dotnet restore RL_Test3/TestProject1 -s https://api.nuget.org/v3/index.json
+        run: dotnet restore RL_Test3/RL_Test3/TestProject1 -s https://api.nuget.org/v3/index.json
         working-directory: ${{ env.GITHUB_WORKSPACE }}
         
       - name: Build
