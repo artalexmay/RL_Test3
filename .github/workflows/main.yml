@@ -27,13 +27,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Checkout RL_Test3
-        uses: actions/checkout@v3
-        with:
-          repository: 'artalexmay/RL_Test3'
-          ref: ${{ github.ref }}
-          path: 'RL_Test3'
-          token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Checkout RL_Test3
+#        uses: actions/checkout@v3
+#        with:
+#          repository: 'artalexmay/RL_Test3'
+#          ref: ${{ github.ref }}
+#         path: 'RL_Test3'
+#          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout RL_Test_Shared
         uses: actions/checkout@v3
