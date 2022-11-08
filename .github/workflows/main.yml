@@ -40,7 +40,15 @@ jobs:
           path: 'RL_Test_Shared'
           token: ${{ secrets.GITHUB_TOKEN }}
     
-    
+      - name: Checkout RL WinForms
+        uses: actions/checkout@v3
+        with:
+          repository: 'artalexmay/RL_Test_WinForms'
+          ref: ${{ env.SHARED_REF }}
+          path: 'RL_Test_WinForms'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+          
     
       - uses: actions/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
