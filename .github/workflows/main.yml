@@ -51,6 +51,10 @@ jobs:
             echo "::group::My title"
             echo "$GITHUB_PATH"
           
+      - name: RL pwd
+        run: pwd
+        working-directory: ${{ env.GITHUB_WORKSPACE }}
+          
       - name: Install dependencies
         run: dotnet restore
         
