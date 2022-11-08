@@ -37,7 +37,7 @@ jobs:
         with:
           repository: 'artalexmay/RL_Test_Shared'
           ref: ${{ env.SHARED_REF }}
-          path: 'RL_Test3/RL_Test_Shared'
+          path: 'RL_Test_Shared'
           token: ${{ secrets.GITHUB_TOKEN }}
     
       - name: Checkout RL WinForms
@@ -104,7 +104,7 @@ jobs:
         working-directory: ${{ env.GITHUB_WORKSPACE }}
         
       - name: Build
-        run: dotnet build TestProject1 --configuration Release --no-restore
+        run: dotnet build RL_Test3/TestProject1 --configuration Release --no-restore
         
       - name: Test
         run: dotnet test TestProject1 -c Release --no-build --verbosity n --logger trx
