@@ -11,8 +11,17 @@ permissions:
   pull-requests: write
 
 jobs:
+  init_job:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set env
+        run: echo "TEST=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+
   print_title_of_pr:
     runs-on: ubuntu-20.04
     steps:
     - name : Print Title of PR
       run: echo "The Title of your PR is ${{ github.event.pull_request.title }} __ and TEST = ${{ env.TEST }}"
+      
+      
+      
