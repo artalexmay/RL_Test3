@@ -32,8 +32,10 @@ jobs:
           TASK_IDS2: "zero"
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
-          echo "PULL_REQUEST_TITLE = ${{ PULL_REQUEST_TITLE }}"
+          echo "PULL_REQUEST_TITLE = ${{ env.PULL_REQUEST_TITLE }}"
           echo "TASK_IDS2 = ${{ env.TASK_IDS2 }}"
+          echo "github.event.pull_request.title = ${{ github.event.pull_request.title }}"
+          echo "github.event.pull_request.body = ${{ github.event.pull_request.body }}"
           echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
           echo "test3=${{ env.TASK_IDS }}" >> $GITHUB_OUTPUT
           echo "TASK_IDS = ${{ env.TASK_IDS }}"
