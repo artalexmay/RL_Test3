@@ -1,3 +1,6 @@
+env:
+  TEST: "123"
+
 on:
   push:
   pull_request:
@@ -12,4 +15,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name : Print Title of PR
-      run: echo The Title of your PR is ${{ github.event.pull_request.title }}
+      run: echo "The Title of your PR is ${{ github.event.pull_request.title }} __ and TEST = ${{ env.TEST }}"
