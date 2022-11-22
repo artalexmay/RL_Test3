@@ -42,7 +42,8 @@ jobs:
     runs-on: ubuntu-20.04
     needs: init_job
     steps:
-    - run: echo ${{needs.init_job.outputs.output1}} ${{needs.init_job.outputs.output2}}
+    - name : Print Outputs
+      run: echo "Outputs first = ${{needs.init_job.outputs.output1}} second = ${{needs.init_job.outputs.output2}} "
     
     - name : Print Title of PR
       run: echo "The Title of your PR is ${{ github.event.pull_request.title }} __ and TEST = ${{ env.TEST }}"
