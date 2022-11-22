@@ -21,48 +21,11 @@ jobs:
       - id: step1
         run: echo "test=hello" >> $GITHUB_OUTPUT
       - id: step2
-        run: echo "test2=world" >> $GITHUB_OUTPUT
-        
-      - name: Set env
-        run: echo "TEST=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-      - name: Get env
-        run: echo ${{ env.TEST }}
-        
-      - name: Set color
-        id: random-color-generator
-        run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
-      - name: Get color
-        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
-        
-      - name: Get TEST2
-        run: echo "TEST2 is ${{ env.TEST2 }}"
-        
+        run: echo "test2=world" >> $GITHUB_OUTPUT   
 
   print_title_of_pr:
     runs-on: ubuntu-20.04
     needs: init_job
     steps:
     - name : Print Outputs
-      run: echo "Outputs first = ${{needs.init_job.outputs.output1}} second = ${{needs.init_job.outputs.output2}} "
-    
-    - name : Print Title of PR
-      run: echo "The Title of your PR is ${{ github.event.pull_request.title }} __ and TEST = ${{ env.TEST }}"
-      
-    - name: Get color
-      run: echo "The selected color is ${{ job.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
-      
-    - name: Get color2
-      run: echo "The selected color is ${{ needs.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
-      
-    - name: Get color3
-      run: echo "The selected color is ${{ needs.init_job.outputs.SELECTED_COLOR }}"
-      
-    - name: Get color4
-      run: echo "The selected color is ${{ needs.jobs.init_job.random-color-generator.outputs.SELECTED_COLOR }}"
-
-    - name: Get TEST2
-      run: echo "TEST2 is ${{ env.TEST2 }}"
-        
-      # jobs.version_job.steps.version_step.outputs.version_number
-      # needs.job1.outputs.output1
-      
+      run: echo "Outputs first = ${{needs.init_job.outputs.output1}} second = ${{needs.init_job.outputs.output2}} "    
