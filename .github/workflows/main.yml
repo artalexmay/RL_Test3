@@ -37,6 +37,8 @@ jobs:
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
           echo "PULL_REQUEST_TITLE = ${{ env.PULL_REQUEST_TITLE }}"
           echo "TASK_IDS2 = ${{ env.TASK_IDS2 }}"
+          echo "GITHUB_ACTION_PATH = ${{GITHUB_ACTION_PATH//\\//}}"
+          
           echo github.event.pull_request.title = ${{ github.event.pull_request.title }}
           echo "github.event.pull_request.body = ${{ github.event.pull_request.body }}"
           echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
