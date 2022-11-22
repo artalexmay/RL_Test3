@@ -53,9 +53,7 @@ jobs:
           echo "test3=${{ env.TASK_IDS }}" >> $GITHUB_OUTPUT
           echo "TASK_IDS = ${{ env.TASK_IDS }}"
           
-      - run: echo "💡 The ${{ github.pull_request }} pull_request."
-      - run: echo "💡 The ${{ github.event.pull_request }} github.event.pull_request."
-      - run: echo "💡 The ${{ github.event.pull_request.title }} github.event.pull_request.title."
+      - run: echo "💡 The ${{ github.head_ref }} github.head_ref."
           
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
