@@ -3,13 +3,20 @@ env:
   TEST2: "456"
 
 on:
-  push:
-  pull_request:
-   types: [opened, synchronize]
+  pull_request_review:
+    types: [ submitted ]
 
 permissions:
   contents: read
   pull-requests: write
+#on:
+#  push:
+#  pull_request:
+#   types: [opened, synchronize]
+
+#permissions:
+#  contents: read
+#  pull-requests: write
 
 jobs:
   init_job:
