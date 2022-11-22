@@ -36,8 +36,8 @@ jobs:
     - name: Get color
       run: echo "The selected color is ${{ job.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
       
-#    - name: Get color2
- #     run: echo "The selected color is ${{ jobs.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
+    - name: Get color2
+      run: echo "The selected color is ${{ needs.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
       # jobs.version_job.steps.version_step.outputs.version_number
-      
+      # needs.job1.outputs.output1
       
