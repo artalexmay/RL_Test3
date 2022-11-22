@@ -16,6 +16,7 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.test }}
       output2: ${{ steps.step2.outputs.test2 }}
+      output3: ${{ steps.step3.outputs.test3 }}
     runs-on: ubuntu-20.04
     steps:
       - id: step1
@@ -24,11 +25,12 @@ jobs:
         run: echo "test2=world" >> $GITHUB_OUTPUT  
         
       - name: Extract task id
+        id: step3
         env:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
         run: |
-          TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[TPTHUB-[0-9]+" | cut -c 2-))
-          echo TASK_IDS=$TASK_IDS >> $GITHUB_ENV
+          TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))
+          echo "test3=${{TASK_IDS}}" >> $GITHUB_OUTPUT
           echo "TASK_IDS = ${{ TASK_IDS }}"
 
   print_title_of_pr:
@@ -36,4 +38,4 @@ jobs:
     needs: init_job
     steps:
     - name : Print Outputs
-      run: echo "Outputs first = ${{needs.init_job.outputs.output1}} second = ${{needs.init_job.outputs.output2}} "    
+      run: echo "Outputs first = ${{needs.init_job.outputs.output1}} second = ${{needs.init_job.outputs.output2}}  third = ${{needs.init_job.outputs.output3}} "    
