@@ -18,12 +18,22 @@ jobs:
         run: echo "TEST=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
       - name: Get env
         run: echo ${{ env.TEST }}
+        
+      - name: Set color
+        id: random-color-generator
+        run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
+      - name: Get color
+        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
+        
 
   print_title_of_pr:
     runs-on: ubuntu-20.04
     steps:
     - name : Print Title of PR
       run: echo "The Title of your PR is ${{ github.event.pull_request.title }} __ and TEST = ${{ env.TEST }}"
+      
+    - name: Get color
+      run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
       
       
       
