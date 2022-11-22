@@ -41,6 +41,9 @@ jobs:
       
     - name: Get color3
       run: echo "The selected color is ${{ needs.init_job.outputs.SELECTED_COLOR }}"
+      
+    - name: Get color4
+      run: echo "The selected color is ${{ needs.jobs.init_job.random-color-generator.outputs.SELECTED_COLOR }}"
 
       # jobs.version_job.steps.version_step.outputs.version_number
       # needs.job1.outputs.output1
