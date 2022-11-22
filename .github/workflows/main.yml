@@ -1,5 +1,6 @@
 env:
   TEST: "123"
+  TEST2: "456"
 
 on:
   push:
@@ -25,6 +26,9 @@ jobs:
       - name: Get color
         run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
         
+      - name: Get TEST2
+        run: echo "TEST2 is ${{ env.TEST2 }}"
+        
 
   print_title_of_pr:
     runs-on: ubuntu-20.04
@@ -45,6 +49,9 @@ jobs:
     - name: Get color4
       run: echo "The selected color is ${{ needs.jobs.init_job.random-color-generator.outputs.SELECTED_COLOR }}"
 
+    - name: Get TEST2
+      run: echo "TEST2 is ${{ env.TEST2 }}"
+        
       # jobs.version_job.steps.version_step.outputs.version_number
       # needs.job1.outputs.output1
       
