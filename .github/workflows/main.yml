@@ -28,6 +28,7 @@ jobs:
 
   print_title_of_pr:
     runs-on: ubuntu-20.04
+    needs: init_job
     steps:
     - name : Print Title of PR
       run: echo "The Title of your PR is ${{ github.event.pull_request.title }} __ and TEST = ${{ env.TEST }}"
@@ -35,8 +36,8 @@ jobs:
     - name: Get color
       run: echo "The selected color is ${{ job.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
       
-#    - name: Get color2
-#      run: echo "The selected color is ${{ init_job.random-color-generator.outputs.SELECTED_COLOR }}"
-      
+    - name: Get color2
+      run: echo "The selected color is ${{ jobs.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
+      # jobs.version_job.steps.version_step.outputs.version_number
       
       
