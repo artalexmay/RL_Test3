@@ -14,8 +14,8 @@ permissions:
 jobs:
   init_job:
     outputs:
-      output1: ${{ steps.init_job.outputs.test }}
-      output2: ${{ steps.init_job.outputs.test2 }}
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test2 }}
     runs-on: ubuntu-20.04
     steps:
       - id: step1
