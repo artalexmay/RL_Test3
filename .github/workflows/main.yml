@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Set env
         run: echo "TEST=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+      - name: Get env
+        run: echo ${{ env.TEST }}
 
   print_title_of_pr:
     runs-on: ubuntu-20.04
