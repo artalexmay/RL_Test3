@@ -33,10 +33,10 @@ jobs:
       run: echo "The Title of your PR is ${{ github.event.pull_request.title }} __ and TEST = ${{ env.TEST }}"
       
     - name: Get color
-      run: echo "The selected color is ${{ jobs.init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
+      run: echo "The selected color is ${{ init_job.steps.random-color-generator.outputs.SELECTED_COLOR }}"
       
     - name: Get color2
-      run: echo "The selected color is ${{ jobs.init_job.random-color-generator.outputs.SELECTED_COLOR }}"
+      run: echo "The selected color is ${{ init_job.random-color-generator.outputs.SELECTED_COLOR }}"
       
       
       
