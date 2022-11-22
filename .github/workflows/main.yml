@@ -30,9 +30,9 @@ jobs:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
           TASK_IDS: "zero"
         run: |
-          TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))
-          echo "test3=${{TASK_IDS}}" >> $GITHUB_OUTPUT
-          echo "TASK_IDS = ${{ TASK_IDS }}"
+          echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
+          echo "test3=${{ env.TASK_IDS }}" >> $GITHUB_OUTPUT
+          echo "TASK_IDS = ${{ env.TASK_IDS }}"
 
   print_title_of_pr:
     runs-on: ubuntu-20.04
