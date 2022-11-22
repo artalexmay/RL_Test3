@@ -28,6 +28,7 @@ jobs:
         id: step3
         env:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
+          TASK_IDS: "zero"
         run: |
           TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))
           echo "test3=${{TASK_IDS}}" >> $GITHUB_OUTPUT
