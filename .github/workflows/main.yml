@@ -1,74 +1,91 @@
 on:
-  push:
-  pull_request_review:
-    types: [ submitted ]
+  pull_request:
+   types: [opened, synchronize]
 
 permissions:
   contents: read
   pull-requests: write
-#on:
-#  push:
-#  pull_request:
-#   types: [opened, synchronize]
-
-#permissions:
-#  contents: read
-#  pull-requests: write
 
 jobs:
-  init_job:
+  preparatory_job:
     outputs:
-      output1: ${{ steps.step1.outputs.test }}
-      output2: ${{ steps.step2.outputs.test2 }}
-      output3: ${{ steps.step3.outputs.test3 }}
+      OUTPUT_TASK_IDS: ${{ steps.step_of_extract_task_id.outputs.TASK_IDS }}
+      OUTPUT_SHARED_REF: ${{ steps.step_of_find_shared_link.outputs.SHARED_REF }}
     runs-on: ubuntu-20.04
     steps:
-      - id: step1
-        run: echo "test=hello" >> $GITHUB_OUTPUT
-      - id: step2
-        run: echo "test2=world" >> $GITHUB_OUTPUT  
-        
       - name : Print Title of PR
-        run: echo "The Title of your PR is ${{ github.event.pull_request.title }}"
-        
-      - name : Print Title of PR 2
-        run: echo The Title of your PR is ${{ github.event.pull_request.title }}
-        
+        run: | 
+          echo "The Title of your PR is ${{ github.event.pull_request.title }}"
+          echo "The Title of your PR is ${{ github.event.pull_request.body  }}"
+
+      - name: Set env
+        run: | 
+          echo "TEST=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+          echo "Test0 == ${{ env.TEST }}"
+      - name: Get env
+        run: echo "Test1 == ${{ env.TEST }}"
+      
       - name: Extract task id
-        id: step3
+        id: step_of_extract_task_id
         env:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
-          PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
-          TASK_IDS2: "zero"
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
-          echo "PULL_REQUEST_TITLE = ${{ env.PULL_REQUEST_TITLE }}"
-          echo "TASK_IDS2 = ${{ env.TASK_IDS2 }}"
-          echo "GITHUB_ACTION_PATH = ${GITHUB_ACTION_PATH//\\//}"
-          
-          echo github.event.pull_request.title = ${{ github.event.pull_request.title }}
-          echo "github.event.pull_request.body = ${{ github.event.pull_request.body }}"
-          echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
-          echo "test3=${{ env.TASK_IDS }}" >> $GITHUB_OUTPUT
-          echo "TASK_IDS = ${{ env.TASK_IDS }}"
-          
-      - run: echo "💡 The ${{ github.event.push.head_commit.message }} github.event.push.head_commit.message."
-          
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  print_title_of_pr:
-    runs-on: ubuntu-20.04
-    needs: init_job
+          TASK_IDS="$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)"
+          echo TASK_IDS=$TASK_IDS >> $GITHUB_ENV
+          echo $TASK_IDS
+          
+          # Result for second job
+          echo TASK_IDS=$TASK_IDS >> $GITHUB_OUTPUT
+          
+      - name: (RESULT) Get TASK_IDS env
+        run: | 
+          echo "TASK_IDS == ${{ env.TASK_IDS }}"
+          
+          TASK_IDS=(${TASK_IDS[@]})
+            for i in "${TASK_IDS[@]}"; do
+              echo "$i";
+          done
+#--------------------------------------------------------------------
+      - name: Get SHARED Pull Requests
+        uses: octokit/request-action@v2.x
+        id: get_shared_prs
+        with:
+          route: GET /repos/{owner}/{repo}/pulls
+          owner: TakeprofitTechnology
+          repo: Shared
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Set SHARED refs
+        id: step_of_find_shared_link
+        env:
+          SHARED_PRS: ${{ steps.get_shared_prs.outputs.data }}
+        run: |
+          TASK_IDS=(${TASK_IDS[@]})
+          for i in "${TASK_IDS[@]}"; do
+            tmp=$(echo $SHARED_PRS | jq -r --arg task_id "$i" '[.[] | select(.body!=null and (.body | contains($task_id))) | .number][0]')
+            if [[ "$tmp" != "null" ]]; then SHARED_REF="$tmp"; fi
+          done
+          
+          echo "SHARED_REF = ${SHARED_REF}"
+          
+          [[ $SHARED_REF ]] && SHARED_REF="refs/pull/${SHARED_REF}/merge" || SHARED_REF="refs/heads/master"
+          echo SHARED_REF=$SHARED_REF >> $GITHUB_ENV
+          
+          # Result for second job
+          echo SHARED_REF=$SHARED_REF >> $GITHUB_OUTPUT
+
+      - name: (RESULT) Get SHARED_REF env
+        run: echo "SHARED_REF == ${{ env.SHARED_REF }}"
+#--------------------------------------------------------------------
+
+  build_and_test_job:
+    runs-on: windows-latest
+    needs: preparatory_job
     steps:
     - name : Print Outputs
-      run: echo "Outputs first = ${{needs.init_job.outputs.output1}} second = ${{needs.init_job.outputs.output2}}  third = ${{needs.init_job.outputs.output3}} "    
+      run: |
+        echo "OUTPUT_TASK_IDS = ${{needs.preparatory_job.outputs.OUTPUT_TASK_IDS}}"
+        echo "OUTPUT_SHARED_REF = ${{needs.preparatory_job.outputs.OUTPUT_SHARED_REF}}"    
