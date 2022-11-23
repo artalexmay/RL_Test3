@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
           echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT
-  #        echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV  
+          echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
 
 #--------------------------------------------------------------------
       - name: Get SHARED Pull Requests
