@@ -88,5 +88,5 @@ jobs:
     steps:
     - name : Print Outputs
       run: |
-        echo "output_youtrack_task_id = ${{needs.init_job.outputs.output_youtrack_task_id}}"
-        echo "output_shared_ref = ${{needs.init_job.outputs.output_shared_ref}}"    
+        echo "OUTPUT_TASK_IDS = ${{needs.init_job.outputs.OUTPUT_TASK_IDS}}"
+        echo "OUTPUT_SHARED_REF = ${{needs.init_job.outputs.OUTPUT_SHARED_REF}}"    
