@@ -39,12 +39,11 @@ jobs:
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
           
-          env.youtrack_task_id_local2=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)
-          echo "youtrack_task_id_local=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
-          echo "OUT = ${{ env.youtrack_task_id_local }}" 
+          #env.youtrack_task_id_local2=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)
+          echo "youtrack_task_id_local2=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
           echo "OUT2 = ${{ env.youtrack_task_id_local2 }}" 
           
-          echo "youtrack_task_id=${{ env.youtrack_task_id_local }} >> $GITHUB_OUTPUT
+          echo "youtrack_task_id=${{ env.youtrack_task_id_local2 }} >> $GITHUB_OUTPUT
           #echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT   
 
   print_title_of_pr:
