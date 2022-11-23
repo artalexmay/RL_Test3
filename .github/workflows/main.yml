@@ -35,8 +35,11 @@ jobs:
           #echo "TASK_IDS=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)" >> $GITHUB_ENV
           ##echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT
           ##echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
+          
           TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))
+          echo TASK_IDS
           echo TASK_IDS=$TASK_IDS >> $GITHUB_ENV
+          echo TASK_IDS
 #--------------------------------------------------------------------
       - name: Get SHARED Pull Requests
         uses: octokit/request-action@v2.x
