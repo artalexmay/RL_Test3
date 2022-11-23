@@ -40,7 +40,7 @@ jobs:
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
           
           #env.youtrack_task_id_local2=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)
-          echo "youtrack_task_id_local2=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
+          echo "youtrack_task_id_local2=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)" >> $GITHUB_ENV
           echo "OUT2 = ${{ env.youtrack_task_id_local2 }}" 
           
           echo "youtrack_task_id=${{ env.youtrack_task_id_local2 }} >> $GITHUB_OUTPUT
