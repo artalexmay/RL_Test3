@@ -33,6 +33,35 @@ jobs:
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
           echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT   
 
+#--------------------------------------------------------------------
+      - name: Get SHARED Pull Requests
+        uses: octokit/request-action@v2.x
+        id: get_shared_prs
+        with:
+          route: GET /repos/{owner}/{repo}/pulls
+          owner: TakeprofitTechnology
+          repo: Shared
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Set SHARED refs
+        env:
+          SHARED_PRS: ${{ steps.get_shared_prs.outputs.data }}
+        run: |
+          TASK_IDS=(${TASK_IDS[@]})
+          for i in "${TASK_IDS[@]}"; do
+            tmp=$(echo $SHARED_PRS | jq -r --arg task_id "$i" '[.[] | select(.body!=null and (.body | contains($task_id))) | .number][0]')
+            if [[ "$tmp" != "null" ]]; then SHARED_REF="$tmp"; fi
+          done
+          [[ $SHARED_REF ]] && SHARED_REF="refs/pull/${SHARED_REF}/merge" || SHARED_REF="refs/heads/master"
+          echo SHARED_REF=$SHARED_REF >> $GITHUB_ENV
+          
+      - name: Get SHARED env
+        run: echo "SHARED_REF == ${{ env.SHARED_REF }}"
+#--------------------------------------------------------------------
+
+
+
   print_title_of_pr:
     runs-on: windows-latest
     needs: init_job
