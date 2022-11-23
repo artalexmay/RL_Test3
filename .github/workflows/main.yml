@@ -11,6 +11,7 @@ jobs:
   init_job:
     outputs:
       output_youtrack_task_id: ${{ steps.step_of_extract_task_id.outputs.youtrack_task_id }}
+      output_shared_ref: ${{ steps.step_of_find_shared_link.outputs.SHARED_REF }}
     runs-on: ubuntu-20.04
     steps:
       - name : Print Title of PR
@@ -40,6 +41,8 @@ jobs:
           TASK_IDS="$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)"
           echo TASK_IDS=$TASK_IDS >> $GITHUB_ENV
           echo $TASK_IDS
+          
+          echo youtrack_task_id=$TASK_IDS >> $GITHUB_OUTPUT
 #--------------------------------------------------------------------
       - name: Get SHARED Pull Requests
         uses: octokit/request-action@v2.x
@@ -62,6 +65,7 @@ jobs:
           done
 
       - name: Set SHARED refs
+        id: step_of_find_shared_link
         env:
           SHARED_PRS: ${{ steps.get_shared_prs.outputs.data }}
         run: |
@@ -75,11 +79,11 @@ jobs:
           
           [[ $SHARED_REF ]] && SHARED_REF="refs/pull/${SHARED_REF}/merge" || SHARED_REF="refs/heads/master"
           echo SHARED_REF=$SHARED_REF >> $GITHUB_ENV
-          
+          echo SHARED_REF=$SHARED_REF >> $GITHUB_OUTPUT
+
       - name: Get SHARED env
         run: echo "SHARED_REF == ${{ env.SHARED_REF }}"
 #--------------------------------------------------------------------
-
 
 
   print_title_of_pr:
@@ -87,4 +91,4 @@ jobs:
     needs: init_job
     steps:
     - name : Print Outputs
-      run: echo "output_youtrack_task_id = ${{needs.init_job.outputs.output_youtrack_task_id}} "    
+      run: echo "output_youtrack_task_id = ${{needs.init_job.outputs.output_youtrack_task_id}} output_shared_ref = ${{needs.init_job.outputs.output_shared_ref}} "    
