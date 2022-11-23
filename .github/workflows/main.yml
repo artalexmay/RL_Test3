@@ -38,7 +38,6 @@ jobs:
           
           #TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))
           TASK_IDS="$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)"
-          echo $TASK_IDS
           echo TASK_IDS=$TASK_IDS >> $GITHUB_ENV
           echo $TASK_IDS
 #--------------------------------------------------------------------
@@ -66,8 +65,8 @@ jobs:
         env:
           SHARED_PRS: ${{ steps.get_shared_prs.outputs.data }}
         run: |
-          #TASK_IDS=(${env.TASK_IDS[@]})
-          for i in "${env.TASK_IDS[@]}"; do
+          #TASK_IDS=(${TASK_IDS[@]})
+          for i in "${TASK_IDS[@]}"; do
             tmp=$(echo $SHARED_PRS | jq -r --arg task_id "$i" '[.[] | select(.body!=null and (.body | contains($task_id))) | .number][0]')
             if [[ "$tmp" != "null" ]]; then SHARED_REF="$tmp"; fi
           done
