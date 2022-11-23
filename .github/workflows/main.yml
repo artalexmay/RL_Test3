@@ -39,19 +39,18 @@ jobs:
         id: step3
         env:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
-          PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
         run: |
+          echo "PULL_REQUEST_TITLE = ${{ github.event.pull_request.title }}"
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
-          echo "PULL_REQUEST_TITLE = ${{ env.PULL_REQUEST_TITLE }}"
 
-          echo "Output Result = TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))"
           echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT
-          echo "output_youtrack_task_id = ${{ env.output_youtrack_task_id }}"
-          #          echo "test3=${{ env.TASK_IDS }}" >> $GITHUB_OUTPUT
-          
+          echo "output_youtrack_task_id1 = ${{ env.output_youtrack_task_id }}"
+          echo "output_youtrack_task_id2 = ${{ output_youtrack_task_id }}"
+          echo "output_youtrack_task_id3 = ${{ env.youtrack_task_id }}"
+          echo "output_youtrack_task_id4 = ${{ youtrack_task_id }}"          
 
   print_title_of_pr:
-    runs-on: ubuntu-20.04
+    runs-on: windows-latest
     needs: init_job
     steps:
     - name : Print Outputs
