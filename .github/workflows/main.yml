@@ -25,6 +25,16 @@ jobs:
       - name: Get env
         run: echo "Test1 == ${{ env.TEST }}"
         
+      - name: Set the value in bash
+        id: step_one
+        run: |
+          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
+          curl https://example.com >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+          
+      - name: Get env
+        run: echo "EOF == ${{ env.JSON_RESPONSE }}"
+        
       - name: Extract task id
         id: step_of_extract_task_id
         env:
