@@ -51,6 +51,13 @@ jobs:
       - name: Get TASK_IDS env
         run: echo "TASK_IDS == ${{ env.TASK_IDS }}"
 
+      - name: Get TASK_IDS env
+        run: |
+          TASK_IDS=(${TASK_IDS[@]})
+            for i in "${TASK_IDS[@]}"; do
+              echo "i = $i";
+          done
+
       - name: Set SHARED refs
         env:
           SHARED_PRS: ${{ steps.get_shared_prs.outputs.data }}
