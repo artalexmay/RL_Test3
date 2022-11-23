@@ -6,14 +6,6 @@ on:
 permissions:
   contents: read
   pull-requests: write
-#on:
-#  push:
-#  pull_request:
-#   types: [opened, synchronize]
-
-#permissions:
-#  contents: read
-#  pull-requests: write
 
 jobs:
   init_job:
@@ -37,7 +29,7 @@ jobs:
       - name: Set env
         run: echo "TEST=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
       - name: Get env
-        run: echo ${{ env.TEST }}
+        run: echo "${{ env.TEST }}"
         
       - name: Extract task id
         id: step3
@@ -45,13 +37,14 @@ jobs:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
-
+          
+          youtrack_task_id_local2=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))
           echo "youtrack_task_id_local=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
           echo "OUT = ${{ env.youtrack_task_id_local }}" 
+          echo "OUT2 = ${{ youtrack_task_id_local2 }}" 
+          
           echo "youtrack_task_id=${{ env.youtrack_task_id_local }} >> $GITHUB_OUTPUT
-          #echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT
-          #echo "output_youtrack_task_id1 = ${{ env.output_youtrack_task_id }}"
-          #echo "output_youtrack_task_id3 = ${{ env.youtrack_task_id }}"    
+          #echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT   
 
   print_title_of_pr:
     runs-on: windows-latest
