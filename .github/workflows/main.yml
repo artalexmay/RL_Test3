@@ -71,7 +71,7 @@ jobs:
             if [[ "$tmp" != "null" ]]; then SHARED_REF="$tmp"; fi
           done
           
-          echo "SHARED_REF = ${{ SHARED_REF }}"
+          echo "SHARED_REF = ${SHARED_REF}"
           
           [[ $SHARED_REF ]] && SHARED_REF="refs/pull/${SHARED_REF}/merge" || SHARED_REF="refs/heads/master"
           echo SHARED_REF=$SHARED_REF >> $GITHUB_ENV
