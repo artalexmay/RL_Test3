@@ -34,9 +34,6 @@ jobs:
       - name : Print Title of PR 1 body 
         run: echo "The Title of your PR is ${{ github.event.pull_request.body  }}"
         
-      - name : Print Title of PR 2 body 
-        run: echo The Title of your PR is ${{ github.event.pull_request.body  }}
-        
       - name: Extract task id
         id: step3
         env:
