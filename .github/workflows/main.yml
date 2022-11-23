@@ -24,24 +24,14 @@ jobs:
           echo "Test0 == ${{ env.TEST }}"
       - name: Get env
         run: echo "Test1 == ${{ env.TEST }}"
-        
-      - name: Set the value in bash
-        id: step_one
-        run: |
-          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
-          curl https://example.com >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-          
-      - name: Get env
-        run: echo "EOF == ${{ env.JSON_RESPONSE }}"
-        
+      
       - name: Extract task id
         id: step_of_extract_task_id
         env:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
-          echo "youtrack_task_id=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)" >> $GITHUB_OUTPUT
+          #echo "youtrack_task_id=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)" >> $GITHUB_OUTPUT
           echo "TASK_IDS=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)" >> $GITHUB_ENV
           #echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT
           #echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
