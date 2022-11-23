@@ -45,7 +45,6 @@ jobs:
 
           echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT
           echo "output_youtrack_task_id1 = ${{ env.output_youtrack_task_id }}"
-          echo "output_youtrack_task_id2 = ${{ output_youtrack_task_id }}"
           echo "output_youtrack_task_id3 = ${{ env.youtrack_task_id }}"
           echo "output_youtrack_task_id4 = ${{ youtrack_task_id }}"          
 
