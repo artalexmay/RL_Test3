@@ -10,17 +10,9 @@ permissions:
 jobs:
   init_job:
     outputs:
-      output1: ${{ steps.step1.outputs.test }}
-      output2: ${{ steps.step2.outputs.test2 }}
-      output3: ${{ steps.step3.outputs.test3 }}
-      output_youtrack_task_id: ${{ steps.step3.outputs.youtrack_task_id }}
+      output_youtrack_task_id: ${{ steps.step_of_extract_task_id.outputs.youtrack_task_id }}
     runs-on: ubuntu-20.04
     steps:
-      - id: step1
-        run: echo "test=hello" >> $GITHUB_OUTPUT
-      - id: step2
-        run: echo "test2=world" >> $GITHUB_OUTPUT  
-        
       - name : Print Title of PR
         run: | 
           echo "The Title of your PR is ${{ github.event.pull_request.title }}"
@@ -34,23 +26,16 @@ jobs:
         run: echo "Test1 == ${{ env.TEST }}"
         
       - name: Extract task id
-        id: step3
+        id: step_of_extract_task_id
         env:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
-          youtrack_task_id_local2: "None"
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
-          
-          #env.youtrack_task_id_local2=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)
-          echo "youtrack_task_id_local2=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
-          echo "OUT2 = ${{ env.youtrack_task_id_local2 }}" 
-          
-          echo "youtrack_task_id=${{ env.youtrack_task_id_local2 }} >> $GITHUB_OUTPUT
-          #echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT   
+          echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT   
 
   print_title_of_pr:
     runs-on: windows-latest
     needs: init_job
     steps:
     - name : Print Outputs
-      run: echo "Outputs first = ${{needs.init_job.outputs.output1}} second = ${{needs.init_job.outputs.output2}}  third = ${{needs.init_job.outputs.output3}} output_youtrack_task_id = ${{needs.init_job.outputs.output_youtrack_task_id}} "    
+      run: echo "output_youtrack_task_id = ${{needs.init_job.outputs.output_youtrack_task_id}} "    
