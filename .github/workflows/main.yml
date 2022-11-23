@@ -30,17 +30,20 @@ jobs:
         run: echo "test2=world" >> $GITHUB_OUTPUT  
         
       - name : Print Title of PR
-        run: echo "The Title of your PR is ${{ github.event.pull_request.title }}"
-        
-      - name : Print Title of PR 1 body 
-        run: echo "The Title of your PR is ${{ github.event.pull_request.body  }}"
+        run: | 
+          echo "The Title of your PR is ${{ github.event.pull_request.title }}"
+          echo "The Title of your PR is ${{ github.event.pull_request.body  }}"
+
+      - name: Set env
+        run: echo "TEST=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+      - name: Get env
+        run: echo ${{ env.TEST }}
         
       - name: Extract task id
         id: step3
         env:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
         run: |
-          echo "PULL_REQUEST_TITLE = ${{ github.event.pull_request.title }}"
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
 
           echo "youtrack_task_id_local=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
