@@ -1,5 +1,4 @@
 on:
-  ##push:
   pull_request:
    types: [opened, synchronize]
 
@@ -8,7 +7,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  init_job:
+  preparatory_job:
     outputs:
       OUTPUT_TASK_IDS: ${{ steps.step_of_extract_task_id.outputs.TASK_IDS }}
       OUTPUT_SHARED_REF: ${{ steps.step_of_find_shared_link.outputs.SHARED_REF }}
@@ -82,11 +81,11 @@ jobs:
         run: echo "SHARED_REF == ${{ env.SHARED_REF }}"
 #--------------------------------------------------------------------
 
-  print_title_of_pr:
+  build_and_test_job:
     runs-on: windows-latest
-    needs: init_job
+    needs: preparatory_job
     steps:
     - name : Print Outputs
       run: |
-        echo "OUTPUT_TASK_IDS = ${{needs.init_job.outputs.OUTPUT_TASK_IDS}}"
-        echo "OUTPUT_SHARED_REF = ${{needs.init_job.outputs.OUTPUT_SHARED_REF}}"    
+        echo "OUTPUT_TASK_IDS = ${{needs.preparatory_job.outputs.OUTPUT_TASK_IDS}}"
+        echo "OUTPUT_SHARED_REF = ${{needs.preparatory_job.outputs.OUTPUT_SHARED_REF}}"    
