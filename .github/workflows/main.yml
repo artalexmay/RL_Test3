@@ -46,6 +46,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
+      - name: Get TASK_IDS env
+        run: echo "TASK_IDS == ${{ env.TASK_IDS }}"
+
       - name: Set SHARED refs
         env:
           SHARED_PRS: ${{ steps.get_shared_prs.outputs.data }}
