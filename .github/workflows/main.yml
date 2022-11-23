@@ -65,7 +65,8 @@ jobs:
         env:
           SHARED_PRS: ${{ steps.get_shared_prs.outputs.data }}
         run: |
-          #TASK_IDS=(${TASK_IDS[@]})
+          echo "SHARED_PRS = ${{ env.SHARED_PRS }}"
+          TASK_IDS=(${TASK_IDS[@]})
           for i in "${TASK_IDS[@]}"; do
             tmp=$(echo $SHARED_PRS | jq -r --arg task_id "$i" '[.[] | select(.body!=null and (.body | contains($task_id))) | .number][0]')
             if [[ "$tmp" != "null" ]]; then SHARED_REF="$tmp"; fi
