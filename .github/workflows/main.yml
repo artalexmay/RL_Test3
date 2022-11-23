@@ -10,8 +10,8 @@ permissions:
 jobs:
   init_job:
     outputs:
-      output_youtrack_task_id: ${{ steps.step_of_extract_task_id.outputs.youtrack_task_id }}
-      output_shared_ref: ${{ steps.step_of_find_shared_link.outputs.SHARED_REF }}
+      OUTPUT_TASK_IDS: ${{ steps.step_of_extract_task_id.outputs.TASK_IDS }}
+      OUTPUT_SHARED_REF: ${{ steps.step_of_find_shared_link.outputs.SHARED_REF }}
     runs-on: ubuntu-20.04
     steps:
       - name : Print Title of PR
@@ -32,17 +32,22 @@ jobs:
           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
         run: |
           echo "PULL_REQUEST_BODY = ${{ env.PULL_REQUEST_BODY }}"
-          #echo "youtrack_task_id=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)" >> $GITHUB_OUTPUT
-          #echo "TASK_IDS=$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)" >> $GITHUB_ENV
-          ##echo "youtrack_task_id=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_OUTPUT
-          ##echo "TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))" >> $GITHUB_ENV
-          
-          #TASK_IDS=($(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-))
+
           TASK_IDS="$(echo ${PULL_REQUEST_BODY} | grep -Eo "\[EMAM3MT5-[0-9]+" | cut -c 2-)"
           echo TASK_IDS=$TASK_IDS >> $GITHUB_ENV
           echo $TASK_IDS
           
-          echo youtrack_task_id=$TASK_IDS >> $GITHUB_OUTPUT
+          # Result for second job
+          echo TASK_IDS=$TASK_IDS >> $GITHUB_OUTPUT
+          
+      - name: (RESULT) Get TASK_IDS env
+        run: | 
+          echo "TASK_IDS == ${{ env.TASK_IDS }}"
+          
+          TASK_IDS=(${TASK_IDS[@]})
+            for i in "${TASK_IDS[@]}"; do
+              echo "$i";
+          done
 #--------------------------------------------------------------------
       - name: Get SHARED Pull Requests
         uses: octokit/request-action@v2.x
@@ -53,16 +58,6 @@ jobs:
           repo: Shared
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-
-      - name: Get TASK_IDS env
-        run: echo "TASK_IDS == ${{ env.TASK_IDS }}"
-
-      - name: Get TASK_IDS env
-        run: |
-          TASK_IDS=(${TASK_IDS[@]})
-            for i in "${TASK_IDS[@]}"; do
-              echo "i = $i";
-          done
 
       - name: Set SHARED refs
         id: step_of_find_shared_link
@@ -79,16 +74,19 @@ jobs:
           
           [[ $SHARED_REF ]] && SHARED_REF="refs/pull/${SHARED_REF}/merge" || SHARED_REF="refs/heads/master"
           echo SHARED_REF=$SHARED_REF >> $GITHUB_ENV
+          
+          # Result for second job
           echo SHARED_REF=$SHARED_REF >> $GITHUB_OUTPUT
 
-      - name: Get SHARED env
+      - name: (RESULT) Get SHARED_REF env
         run: echo "SHARED_REF == ${{ env.SHARED_REF }}"
 #--------------------------------------------------------------------
-
 
   print_title_of_pr:
     runs-on: windows-latest
     needs: init_job
     steps:
     - name : Print Outputs
-      run: echo "output_youtrack_task_id = ${{needs.init_job.outputs.output_youtrack_task_id}} output_shared_ref = ${{needs.init_job.outputs.output_shared_ref}} "    
+      run: |
+        echo "output_youtrack_task_id = ${{needs.init_job.outputs.output_youtrack_task_id}}"
+        echo "output_shared_ref = ${{needs.init_job.outputs.output_shared_ref}}"    
